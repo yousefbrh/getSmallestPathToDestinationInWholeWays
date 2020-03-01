@@ -88,81 +88,121 @@ void setStartAndEnd(vector< vector<int> > matrix , int & startRow , int & startC
         cout << "There is no free way in the matrix!" << endl;
     }
 }
-int move(vector< vector<int> > matrix , int & tempRow , int & tempColumn , int endRow , int endColumn , int & path , int & lastSpotRow , int & lastSpotColumn)
+//int move(vector< vector<int> > matrix , int & tempRow , int & tempColumn , int endRow , int endColumn , int & path , int & lastSpotRow , int & lastSpotColumn)
+//{
+//    int ways , da
+//}
+int move(vector< vector<int> > matrix , int & tempRow , int & tempColumn , int endRow , int endColumn , int & path , int & lastSpotRow , int & lastSpotColumn , int row , int column)
 {
+    cout << "check start " << tempRow << "   " << tempColumn << "   "<<path << endl;
     cout << "enter move" << endl;
-    cout << tempRow << "   " << tempColumn << endl;
+    cout << tempRow << "   " << tempColumn << "   "<< path << endl;
+    cout << lastSpotRow << "   " << lastSpotColumn << endl;
     if (tempRow == endRow && tempColumn == endColumn)
     {
         cout << "enter move 1" << endl;
-        return path;
+        cout <<"answer :" << path << endl;
+        return 0;
     }
     cout << "enter move 2" << endl;
     if (tempRow != 0)
     {
-        if (matrix[tempRow - 1][tempColumn] == 1 && tempRow - 1 != lastSpotRow)
+        cout << "enter move 2/1" << endl;
+        cout << tempRow << "   " << tempColumn << endl;
+        int xTempRow = tempRow , xTempColumn = tempColumn , xPath = path , xLastSpotRow = lastSpotRow , xLastSpotColumn = lastSpotColumn;
+        if (matrix[tempRow - 1][tempColumn] == 1 && (tempColumn != lastSpotColumn || tempRow - 1 != lastSpotRow))
         {
             cout << "enter move 3" << endl;
             lastSpotRow = tempRow;
+            lastSpotColumn = tempColumn;
             tempRow--;
             path++;
-            cout << tempRow << "   " << tempColumn << endl;
-            move(matrix , tempRow ,tempColumn , endRow , endColumn , path , lastSpotRow , lastSpotColumn);
+            cout << tempRow << "   " << tempColumn << "   "<<path << endl;
+            cout << lastSpotRow << "   " << lastSpotColumn << endl;
+            move(matrix , tempRow ,tempColumn , endRow , endColumn , path , lastSpotRow , lastSpotColumn , row , column);
         }
+        tempRow = xTempRow;
+        tempColumn = xTempColumn;
+        path = xPath;
+        lastSpotRow = xLastSpotRow;
+        lastSpotColumn = xLastSpotColumn;
     }
-    else if (tempColumn != endColumn)
-    {
-        if (matrix[tempRow][tempColumn + 1] == 1 && tempColumn + 1 != lastSpotColumn)
+    if (tempColumn != endColumn && tempColumn != column - 1) {
+        cout << "enter move 2/2" << endl;
+        cout << tempRow << "   " << tempColumn << endl;
+        int xTempRow = tempRow, xTempColumn = tempColumn, xPath = path, xLastSpotRow = lastSpotRow , xLastSpotColumn = lastSpotColumn;
+        if (matrix[tempRow][tempColumn + 1] == 1 && (tempColumn + 1 != lastSpotColumn || tempRow != lastSpotRow))
         {
             cout << "enter move 4" << endl;
+            lastSpotRow = tempRow;
             lastSpotColumn = tempColumn;
             tempColumn++;
             path++;
-            cout << tempRow << "   " << tempColumn << endl;
-            move(matrix , tempRow ,tempColumn , endRow , endColumn , path , lastSpotRow , lastSpotColumn);
+            cout << tempRow << "   " << tempColumn << "   "<<path << endl;
+            cout << lastSpotRow << "   " << lastSpotColumn << endl;
+            move(matrix, tempRow, tempColumn, endRow, endColumn, path, lastSpotRow, lastSpotColumn, row, column);
         }
+        tempRow = xTempRow;
+        tempColumn = xTempColumn;
+        path = xPath;
+        lastSpotRow = xLastSpotRow;
+        lastSpotColumn = xLastSpotColumn;
     }
-    else if (tempRow != endRow)
+    if (tempRow != endRow && tempRow != row - 1)
     {
-        if (matrix[tempRow + 1][tempColumn] == 1 && tempRow + 1 != lastSpotRow)
+        cout << "enter move 2/3" << endl;
+        cout << tempRow << "   " << tempColumn << endl;
+        cout << lastSpotRow << "   " << lastSpotColumn << endl;
+        int xTempRow = tempRow , xTempColumn = tempColumn , xPath = path , xLastSpotRow = lastSpotRow , xLastSpotColumn = lastSpotColumn;
+        if (matrix[tempRow + 1][tempColumn] == 1 && (tempColumn != lastSpotColumn || tempRow + 1 != lastSpotRow))
         {
             cout << "enter move 5" << endl;
             lastSpotRow = tempRow;
+            lastSpotColumn = tempColumn;
             tempRow++;
             path++;
-            cout << tempRow << "   " << tempColumn << endl;
-            move(matrix , tempRow ,tempColumn , endRow , endColumn , path , lastSpotRow , lastSpotColumn);
+            cout << tempRow << "   " << tempColumn << "   "<<path << endl;
+            cout << lastSpotRow << "   " << lastSpotColumn << endl;
+            move(matrix, tempRow, tempColumn, endRow, endColumn, path, lastSpotRow, lastSpotColumn, row, column);
         }
+        tempRow = xTempRow;
+        tempColumn = xTempColumn;
+        path = xPath;
+        lastSpotRow = xLastSpotRow;
+        lastSpotColumn = xLastSpotColumn;
     }
-    else if (tempColumn != 0)
+    if (tempColumn != 0)
     {
-        if (matrix[tempRow][tempColumn - 1] == 1 && tempColumn - 1 != lastSpotColumn)
+        cout << "enter move 2/4" << endl;
+        cout << tempRow << "   " << tempColumn << endl;
+        cout << lastSpotRow << "   " << lastSpotColumn << endl;
+        int xTempRow = tempRow , xTempColumn = tempColumn , xPath = path , xLastSpotRow = lastSpotRow , xLastSpotColumn = lastSpotColumn;
+        if (matrix[tempRow][tempColumn - 1] == 1 && (tempColumn - 1 != lastSpotColumn || tempRow != lastSpotRow))
         {
             cout << "enter move 6" << endl;
+            lastSpotRow = tempRow;
             lastSpotColumn = tempColumn;
             tempColumn--;
             path++;
-            cout << tempRow << "   " << tempColumn << endl;
-            move(matrix , tempRow ,tempColumn , endRow , endColumn , path , lastSpotRow , lastSpotColumn);
+            cout << tempRow << "   " << tempColumn << "   "<<path << endl;
+            cout << lastSpotRow << "   " << lastSpotColumn << endl;
+            move(matrix, tempRow, tempColumn, endRow, endColumn, path, lastSpotRow, lastSpotColumn, row, column);
         }
+        tempRow = xTempRow;
+        tempColumn = xTempColumn;
+        path = xPath;
+        lastSpotRow = xLastSpotRow;
+        lastSpotColumn = xLastSpotColumn;
     }
-    else
-    {
-        cout << "enter move last else" << endl;
-        return -1;
-    }
-    cout << "enter move last" << endl;
+    cout << "enter move last else" << endl;
+    cout << "check end " << tempRow << "   " << tempColumn << "   "<<path << endl;
 }
 void getSmallestPathToDestination(vector< vector<int> > matrix , int startRow , int startColumn , int endRow , int endColumn , int row , int column , int plus , int minus)
 {
     int path = 0;
     int tempRow = startRow , tempColumn = startColumn;
     int lastSpotRow = tempRow , lastSpotColumn = tempColumn;
-    int finalPath;
-    cout << "enter" << endl;
-    finalPath = move(matrix , tempRow ,tempColumn , endRow , endColumn , path , lastSpotRow , lastSpotColumn);
-    cout << "exit" << endl;
-    cout <<"answer :" << finalPath << endl;
+    move(matrix , tempRow ,tempColumn , endRow , endColumn , path , lastSpotRow , lastSpotColumn , row , column);
 }
 int main() {
     int row , column;
