@@ -10,10 +10,7 @@ class cell
     int id;
     bool freeToPass = true;
 };
-cout << "up" << endl;
-cout << "right" << endl;
-cout << "left" << endl;
-cout << "down" << endl;
+
 void setSize(int & rowSet , int & columnSet)
 {
     cout << "Enter How Many Row You Want? " << endl;
@@ -106,18 +103,18 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
 {
     if (tempRow == endRow && tempColumn == endColumn)
     {
-        cout << "destination" << endl;
+        //cout << "destination" << endl;
         pathCollection.push_back(path);
         return;
     }
     if (tempRow == 0 && tempColumn == 0)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
         ///Down
-        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow + 1][tempColumn].freeToPass)
         {
-            cout << "down" << endl;
+            //cout << "down" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow++;
@@ -127,9 +124,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Right
-        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn + 1].freeToPass)
         {
-            cout << "right" << endl;
+            //cout << "right" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn++;
@@ -138,18 +135,18 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         }
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
-        cout << "end  " << tempRow << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn << endl;
         return;
     }
 
     if (tempRow == 0 && tempColumn == column - 1)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
         ///Down
-        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow + 1][tempColumn].freeToPass)
         {
-            cout << "down" << endl;
+            //cout << "down" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow++;
@@ -159,9 +156,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Left
-        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn - 1].freeToPass)
         {
-            cout << "left" << endl;
+            //cout << "left" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn--;
@@ -170,18 +167,18 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         }
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
-        cout << "end  " << tempRow << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn << endl;
         return;
     }
 
     if (tempRow == row - 1 && tempColumn == 0)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
         ///Up
-        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow - 1][tempColumn].freeToPass)
         {
-            cout << "up" << endl;
+            //cout << "up" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow--;
@@ -191,9 +188,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Right
-        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn + 1].freeToPass)
         {
-            cout << "right" << endl;
+            //cout << "right" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn++;
@@ -202,18 +199,18 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         }
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
-        cout << "end  " << tempRow << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn << endl;
         return;
     }
 
     if (tempRow == row - 1 && tempColumn == column - 1)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
         ///Up
-        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow - 1][tempColumn].freeToPass)
         {
-            cout << "up" << endl;
+            //cout << "up" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow--;
@@ -223,9 +220,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Left
-        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn - 1].freeToPass)
         {
-            cout << "left" << endl;
+            //cout << "left" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn--;
@@ -234,18 +231,18 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         }
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
-        cout << "end  " << tempRow << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn << endl;
         return;
     }
 
     if (tempRow == 0 && tempColumn != 0 && tempColumn != column - 1)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
         ///Down
-        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow + 1][tempColumn].freeToPass)
         {
-            cout << "down" << endl;
+            //cout << "down" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow++;
@@ -255,9 +252,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Right
-        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn + 1].freeToPass)
         {
-            cout << "right" << endl;
+            //cout << "right" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn++;
@@ -267,9 +264,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Left
-        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn - 1].freeToPass)
         {
-            cout << "left" << endl;
+            //cout << "left" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn--;
@@ -278,17 +275,18 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         }
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
-        cout << "end  " << tempRow << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn << endl;
         return ;
     }
 
     if (tempRow == row - 1 && tempColumn != 0 && tempColumn != column - 1)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
         ///Up
-        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow - 1][tempColumn].freeToPass)
         {
+            //cout << "up" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow--;
@@ -298,8 +296,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Right
-        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn + 1].freeToPass)
         {
+            //cout << "right" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn++;
@@ -309,8 +308,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Left
-        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn - 1].freeToPass)
         {
+            //cout << "left" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn--;
@@ -319,18 +319,18 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         }
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
-        cout << "end  " << tempRow << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn << endl;
         return ;
     }
 
     if (tempColumn == column - 1 && tempRow != 0 && tempRow != row - 1)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
         ///Up
-        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow - 1][tempColumn].freeToPass)
         {
-            cout << " up" << endl;
+            //cout << " up" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow--;
@@ -340,9 +340,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Down
-        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow + 1][tempColumn].freeToPass)
         {
-            cout << "down" << endl;
+            //cout << "down" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow++;
@@ -352,8 +352,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Left
-        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn - 1].freeToPass)
         {
+            //cout << "left" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn--;
@@ -362,17 +363,18 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         }
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
-        cout << "end  " << tempRow << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn << endl;
         return ;
     }
 
     if (tempColumn == 0 && tempRow != 0 && tempRow != row - 1)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
         ///Up
-        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow - 1][tempColumn].freeToPass)
         {
+            //cout << "up" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow--;
@@ -382,8 +384,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Right
-        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn + 1].freeToPass)
         {
+            //cout << "right" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempColumn++;
@@ -393,8 +396,9 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
         matrix[tempRow][tempColumn].freeToPass = true;
         ///Down
-        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+        if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow + 1][tempColumn].freeToPass)
         {
+            //cout << "down" << endl;
             lastSpot = matrix[tempRow][tempColumn].id;
             matrix[tempRow][tempColumn].freeToPass = false;
             tempRow++;
@@ -403,63 +407,67 @@ void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int
         }
         tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
         matrix[tempRow][tempColumn].freeToPass = true;
-        cout << "end  " << tempRow << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn << endl;
         return ;
     }
 
     int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
     ///Up
-    if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+    if (matrix[tempRow - 1][tempColumn].id != lastSpot && matrix[tempRow - 1][tempColumn].value != 0 && matrix[tempRow - 1][tempColumn].freeToPass)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "up" << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         lastSpot = matrix[tempRow][tempColumn].id;
         matrix[tempRow][tempColumn].freeToPass = false;
         tempRow--;
         path++;
         move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column , pathCollection);
-        cout << "end  " << tempRow + 1 << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow + 1 << "      " << tempColumn << endl;
     }
     tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
     matrix[tempRow][tempColumn].freeToPass = true;
     ///Right
-    cout << "start  " << tempRow << "      " << tempColumn << endl;
-    if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+    //cout << "start  " << tempRow << "      " << tempColumn << endl;
+    if (matrix[tempRow][tempColumn + 1].id != lastSpot && matrix[tempRow][tempColumn + 1].value != 0 && matrix[tempRow][tempColumn + 1].freeToPass)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "right" << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         lastSpot = matrix[tempRow][tempColumn].id;
         matrix[tempRow][tempColumn].freeToPass = false;
         tempColumn++;
         path++;
         move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column , pathCollection);
-        cout << "end  " << tempRow << "      " << tempColumn - 1 << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn - 1 << endl;
     }
     tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
     matrix[tempRow][tempColumn].freeToPass = true;
     ///Down
-    cout << "start  " << tempRow << "      " << tempColumn << endl;
-    if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+    //cout << "start  " << tempRow << "      " << tempColumn << endl;
+    if (matrix[tempRow + 1][tempColumn].id != lastSpot && matrix[tempRow + 1][tempColumn].value != 0 && matrix[tempRow + 1][tempColumn].freeToPass)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "down" << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         lastSpot = matrix[tempRow][tempColumn].id;
         matrix[tempRow][tempColumn].freeToPass = false;
         tempRow++;
         path++;
         move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column , pathCollection);\
-        cout << "end  " << tempRow - 1 << "      " << tempColumn << endl;
+        //cout << "end  " << tempRow - 1 << "      " << tempColumn << endl;
     }
     tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
     matrix[tempRow][tempColumn].freeToPass = true;
     ///Left
-    cout << "start  " << tempRow << "      " << tempColumn << endl;
-    if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn].freeToPass)
+    //cout << "start  " << tempRow << "      " << tempColumn << endl;
+    if (matrix[tempRow][tempColumn - 1].id != lastSpot && matrix[tempRow][tempColumn - 1].value != 0 && matrix[tempRow][tempColumn - 1].freeToPass)
     {
-        cout << "start  " << tempRow << "      " << tempColumn << endl;
+        //cout << "left" << endl;
+        //cout << "start  " << tempRow << "      " << tempColumn << endl;
         lastSpot = matrix[tempRow][tempColumn].id;
         matrix[tempRow][tempColumn].freeToPass = false;
         tempColumn--;
         path++;
         move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column , pathCollection);
-        cout << "end  " << tempRow << "      " << tempColumn + 1 << endl;
+        //cout << "end  " << tempRow << "      " << tempColumn + 1 << endl;
     }
     tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
     matrix[tempRow][tempColumn].freeToPass = true;
@@ -475,13 +483,20 @@ void getSmallestPathToDestination(vector< vector<cell> > matrix , int startRow ,
     int count = 0;
     for (int i = 0; i < pathCollection.size() ; i++)
     {
-//        if (pathCollection[i] < path)
-//        {
-//            path = pathCollection[i];
-//        }
-        count ++;
+        if (pathCollection[i] < path)
+        {
+            path = pathCollection[i];
+        }
     }
-cout << count << endl;
+    for (int i = 0; i < pathCollection.size() ; i++)
+    {
+        if (pathCollection[i] == path)
+        {
+            count++;
+        }
+    }
+    cout << "Smallest way is: " << path << endl;
+    cout << "Whole small way: " << count << endl;
 }
 int main() {
     int row , column;
