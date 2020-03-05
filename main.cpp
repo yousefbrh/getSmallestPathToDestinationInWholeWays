@@ -5,7 +5,7 @@ using namespace std;
 
 class cell
 {
-    public:
+public:
 
     int value;
     int id;
@@ -57,7 +57,8 @@ void setMatrixField(vector< vector<cell> > &matrix , int row , int column , int 
         printMatrix(matrix , column , i + 1);
     }
 }
-void setStartAndEnd(vector< vector<cell> > matrix , int & startRow , int & startColumn , int & endRow , int & endColumn , int plus)
+void setStartAndEnd(vector< vector<cell> > matrix , int & startRow , int & startColumn , int & endRow , int & endColumn
+        , int plus)
 {
     /// Start
     while (plus > 0)
@@ -100,101 +101,113 @@ void setStartAndEnd(vector< vector<cell> > matrix , int & startRow , int & start
         cout << "There is no free way in the matrix!" << endl;
     }
 }
-int setOutOfRange(int num , int low , int high , bool & access)
+void setOutOfRange(int num1 , int num2 , int high , bool & access)
 {
-    if (num < low)
+    if (num1 < 0)
     {
-        num = low;
+        num1 = 0;
         access = false;
     }
-    if (num > high)
+    if (num1 > high)
     {
-        num = high;
+        num1 = high;
         access = false;
     }
-    return num;
+    if (num2 < 0)
+    {
+        num2 = 0;
+        access = false;
+    }
+    if (num2 > high)
+    {
+        num2 = high;
+        access = false;
+    }
 }
-void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int endRow , int endColumn , int & lastSpot , int & path , int row , int column , vector <int> & pathCollection)
+void setCondition(int choice , int & i , int & j , int & k , int column , int row)
 {
-    bool outOfRangeAccess = true;
+    switch (choice)
+    {
+        case 1:
+            i = 0;
+            j = 1;
+            k = column - 1;
+            break;
+        case 2:
+            i = 0;
+            j = -1;
+            k = column - 1;
+            break;
+        case 3:
+            i = 1;
+            j = 0;
+            k = row - 1;
+            break;
+        case 4:
+            i = -1;
+            j = 0;
+            k = row - 1;
+            break;
+    }
+}
+void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int endRow , int endColumn
+        , int & lastSpot , int & path , int row , int column , vector <int> & pathCollection , int & choice)
+{
+//    cout << "start    " << tempRow << "   " << tempColumn << endl;
     if (tempRow == endRow && tempColumn == endColumn)
-    {
-        pathCollection.push_back(path);
-        return;
-    }
+        {
+            pathCollection.push_back(path);
+            return;
+        }
+    int i , j , k;
+    setCondition(choice , i , j , k , column , row);
+    bool outOfRangeAccess = true;
+    setOutOfRange(tempRow + i , tempColumn + j , k , outOfRangeAccess);
+//    cout << "after set    " << tempRow << "   " << tempColumn << endl;
     int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
-
-    ///Up
-    if (matrix[setOutOfRange(tempRow - 1, 0 , row - 1 , outOfRangeAccess)][tempColumn].id != lastSpot
-    && matrix[setOutOfRange(tempRow - 1 , 0 , row - 1 , outOfRangeAccess)][tempColumn].value != 0
-    && matrix[setOutOfRange(tempRow - 1 , 0 , row - 1 , outOfRangeAccess)][tempColumn].freeToPass
-    && outOfRangeAccess)
+    if (outOfRangeAccess && matrix[tempRow + i][tempColumn + j].id != lastSpot
+    && matrix[tempRow + i][tempColumn + j].value != 0 && matrix[tempRow + i][tempColumn + j].freeToPass)
     {
+//        cout << "inside if    " << tempRow << "   " << tempColumn << endl;
         lastSpot = matrix[tempRow][tempColumn].id;
         matrix[tempRow][tempColumn].freeToPass = false;
-        tempRow--;
+        tempRow = tempRow + i;
+        tempColumn = tempColumn + j;
         path++;
-        move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column , pathCollection);
+        int ychoice= choice;
+//        cout << "after change    " << tempRow << "   " << tempColumn << endl;
+        choice = 1;
+        move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column
+                , pathCollection , choice);
+//        cout << "out of if recursive   " << tempRow << "   " << tempColumn << endl;
+        choice = ychoice;
     }
     tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
     matrix[tempRow][tempColumn].freeToPass = true;
     outOfRangeAccess = true;
-
-    ///Right
-    if (matrix[tempRow][setOutOfRange(tempColumn + 1 , 0 , column - 1 , outOfRangeAccess)].id != lastSpot
-    && matrix[tempRow][setOutOfRange(tempColumn + 1 , 0 , column - 1 , outOfRangeAccess)].value != 0
-    && matrix[tempRow][setOutOfRange(tempColumn + 1 , 0 , column - 1 , outOfRangeAccess)].freeToPass
-    && outOfRangeAccess)
+    choice++;
+    int xchoice = choice;
+//    cout << "before inside second recursive    " << tempRow << "   " << tempColumn << endl;
+    if (choice <= 4)
     {
-        lastSpot = matrix[tempRow][tempColumn].id;
-        matrix[tempRow][tempColumn].freeToPass = false;
-        tempColumn++;
-        path++;
-        move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column , pathCollection);
+        move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column
+                , pathCollection , choice);
+        choice = xchoice;
     }
-    tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
-    matrix[tempRow][tempColumn].freeToPass = true;
-    outOfRangeAccess = true;
+//    cout << "out of second recursive    " << tempRow << "   " << tempColumn << endl;
 
-    ///Down
-    if (matrix[setOutOfRange(tempRow + 1 , 0 , row - 1 ,outOfRangeAccess)][tempColumn].id != lastSpot
-    && matrix[setOutOfRange(tempRow + 1 , 0 , row - 1 ,outOfRangeAccess)][tempColumn].value != 0
-    && matrix[setOutOfRange(tempRow + 1 , 0 , row - 1 ,outOfRangeAccess)][tempColumn].freeToPass
-    && outOfRangeAccess)
-    {
-        lastSpot = matrix[tempRow][tempColumn].id;
-        matrix[tempRow][tempColumn].freeToPass = false;
-        tempRow++;
-        path++;
-        move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column , pathCollection);\
-    }
-    tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
-    matrix[tempRow][tempColumn].freeToPass = true;
-    outOfRangeAccess = true;
-
-    ///Left
-    if (matrix[tempRow][setOutOfRange(tempColumn - 1 , 0 , column - 1 , outOfRangeAccess)].id != lastSpot
-    && matrix[tempRow][setOutOfRange(tempColumn - 1 , 0 , column - 1 , outOfRangeAccess)].value != 0
-    && matrix[tempRow][setOutOfRange(tempColumn - 1 , 0 , column - 1 , outOfRangeAccess)].freeToPass
-    && outOfRangeAccess)
-    {
-        lastSpot = matrix[tempRow][tempColumn].id;
-        matrix[tempRow][tempColumn].freeToPass = false;
-        tempColumn--;
-        path++;
-        move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column , pathCollection);
-    }
-    tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath;
-    matrix[tempRow][tempColumn].freeToPass = true;
-    outOfRangeAccess = true;
 }
-void getSmallestPathToDestination(vector< vector<cell> > matrix , int startRow , int startColumn , int endRow , int endColumn , int row , int column , int plus , int minus)
+void getSmallestPathToDestination(vector< vector<cell> > matrix , int startRow , int startColumn , int endRow
+        , int endColumn , int row , int column)
 {
     int path = 0;
     int tempRow = startRow , tempColumn = startColumn;
     int lastSpot = matrix[tempRow][tempColumn].id;
     vector <int> pathCollection;
-    move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column , pathCollection);
+    int choice = 1;
+    int round = 0;
+    move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column
+            , pathCollection , choice);
     if (pathCollection.size())
     {
         path = pathCollection.at(0);
@@ -229,6 +242,6 @@ int main() {
     setMatrixField(matrixField , row , column , plus , minus);
     int startRow = 0 , startColumn = 0 , endRow = 0 , endColumn = 0;
     setStartAndEnd(matrixField , startRow , startColumn , endRow , endColumn , plus );
-    getSmallestPathToDestination(matrixField , startRow , startColumn , endRow , endColumn , row , column , plus , minus);
+    getSmallestPathToDestination(matrixField , startRow , startColumn , endRow , endColumn , row , column);
     return 0;
 }
