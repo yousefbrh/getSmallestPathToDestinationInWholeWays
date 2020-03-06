@@ -56,6 +56,7 @@ void setMatrixField(vector< vector<cell> > &matrix , int row , int column , int 
         }
         printMatrix(matrix , column , i + 1);
     }
+
 }
 void setStartAndEnd(vector< vector<cell> > matrix , int & startRow , int & startColumn , int & endRow , int & endColumn
         , int plus)
@@ -101,139 +102,75 @@ void setStartAndEnd(vector< vector<cell> > matrix , int & startRow , int & start
         cout << "There is no free way in the matrix!" << endl;
     }
 }
-void setOutOfRange(int num1 , int num2 , int high , bool & access)
+int findShortestWay (vector< vector<cell> > map , int startRow , int startColumn , int endRow , int endColumn)
 {
-    if (num1 < 0)
+    cout << "enter 1" << endl;
+    cout << startRow << "    " << startColumn << endl;
+    if (startRow == endRow && startColumn == endColumn)
     {
-        num1 = 0;
-        access = false;
+        return 0;
     }
-    if (num1 > high)
-    {
-        num1 = high;
-        access = false;
-    }
-    if (num2 < 0)
-    {
-        num2 = 0;
-        access = false;
-    }
-    if (num2 > high)
-    {
-        num2 = high;
-        access = false;
-    }
-}
-void setCondition(int choice , int & i , int & j , int & k , int column , int row)
-{
-    switch (choice)
-    {
-        case 1:
-            i = 0;
-            j = 1;
-            k = column - 1;
-            break;
-        case 2:
-            i = 0;
-            j = -1;
-            k = column - 1;
-            break;
-        case 3:
-            i = 1;
-            j = 0;
-            k = row - 1;
-            break;
-        case 4:
-            i = -1;
-            j = 0;
-            k = row - 1;
-            break;
-    }
-}
-void move(vector< vector<cell> > matrix , int & tempRow , int & tempColumn , int endRow , int endColumn
-        , int & lastSpot , int & path , int row , int column , vector <int> & pathCollection , int & choice)
-{
-//    cout << "start    " << tempRow << "   " << tempColumn << endl;
-    if (tempRow == endRow && tempColumn == endColumn)
-        {
-            pathCollection.push_back(path);
-            return;
-        }
-    int i , j , k;
-    setCondition(choice , i , j , k , column , row);
-    bool outOfRangeAccess = true;
-    setOutOfRange(tempRow + i , tempColumn + j , k , outOfRangeAccess);
-//    cout << "after set    " << tempRow << "   " << tempColumn << endl;
-    int xTempRow = tempRow , xTempColumn = tempColumn , xLastSpot = lastSpot , xPath = path;
-    if (outOfRangeAccess && matrix[tempRow + i][tempColumn + j].id != lastSpot
-    && matrix[tempRow + i][tempColumn + j].value != 0 && matrix[tempRow + i][tempColumn + j].freeToPass)
-    {
-//        cout << "inside if    " << tempRow << "   " << tempColumn << endl;
-        lastSpot = matrix[tempRow][tempColumn].id;
-        matrix[tempRow][tempColumn].freeToPass = false;
-        tempRow = tempRow + i;
-        tempColumn = tempColumn + j;
-        path++;
-        int ychoice= choice;
-//        cout << "after change    " << tempRow << "   " << tempColumn << endl;
-        choice = 1;
-        move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column
-                , pathCollection , choice);
-//        cout << "out of if recursive   " << tempRow << "   " << tempColumn << endl;
-        choice = ychoice;
-    }
-    tempRow = xTempRow , tempColumn = xTempColumn , lastSpot = xLastSpot , path = xPath ;
-    matrix[tempRow][tempColumn].freeToPass = true;
-    outOfRangeAccess = true;
-    choice++;
-    int xchoice = choice;
-//    cout << "before inside second recursive    " << tempRow << "   " << tempColumn << endl;
-    if (choice <= 4)
-    {
-        move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column
-                , pathCollection , choice);
-        choice = xchoice;
-    }
-//    cout << "out of second recursive    " << tempRow << "   " << tempColumn << endl;
-
-}
-void getSmallestPathToDestination(vector< vector<cell> > matrix , int startRow , int startColumn , int endRow
-        , int endColumn , int row , int column)
-{
-    int path = 0;
-    int tempRow = startRow , tempColumn = startColumn;
-    int lastSpot = matrix[tempRow][tempColumn].id;
+    map[startRow][startColumn].freeToPass = false;
     vector <int> pathCollection;
-    int choice = 1;
-    int round = 0;
-    move(matrix , tempRow ,tempColumn , endRow , endColumn , lastSpot ,path , row , column
-            , pathCollection , choice);
-    if (pathCollection.size())
+    cout << "enter 2" << endl;
+    cout << startRow << "    " << startColumn << endl;
+    if (startRow + 1 <= map.size() - 1)
     {
-        path = pathCollection.at(0);
-        int count = 0;
-        for (int i = 0; i < pathCollection.size() ; i++)
+        if (map[startRow + 1][startColumn].freeToPass && map[startRow + 1][startColumn].value != 0)
         {
-            if (pathCollection[i] < path)
+            pathCollection.push_back(
+                    findShortestWay(map , startRow + 1 , startColumn , endRow , endColumn));
+        }
+    }
+    cout << "enter 3" << endl;
+    cout << startRow << "    " << startColumn << endl;
+    if (startColumn + 1 <= map[0].size() - 1)
+    {
+        if (map[startRow][startColumn + 1].freeToPass && map[startRow][startColumn + 1].value != 0)
+        {
+            pathCollection.push_back(
+                    findShortestWay(map , startRow , startColumn + 1 , endRow , endColumn));
+        }
+    }
+    cout << "enter 3" << endl;
+    cout << startRow << "    " << startColumn << endl;
+    if (startRow - 1 >= 0)
+    {
+        if (map[startRow - 1][startColumn].freeToPass && map[startRow - 1][startColumn].value != 0)
+        {
+            pathCollection.push_back(
+                    findShortestWay(map, startRow - 1 , startColumn , endRow , endColumn));
+        }
+    }
+    cout << "enter 4" << endl;
+    cout << startRow << "    " << startColumn << endl;
+    if (startColumn - 1 >= 0)
+    {
+        if (map[startRow][startColumn - 1].freeToPass && map[startRow][startColumn - 1].value != 0)
+        {
+            pathCollection.push_back(
+                    findShortestWay(map , startRow , startColumn - 1 , endRow , endColumn));
+        }
+    }
+    cout << "enter 5" << endl;
+    cout << startRow << "    " << startColumn << endl;
+    if(pathCollection.size())
+    {
+        int tempPath = map.size() * map[0].size() + 1;
+        for (int path : pathCollection)
+        {
+            if(path != -1 && tempPath > path)
             {
-                path = pathCollection[i];
+                tempPath = path;
             }
         }
-        for (int i = 0; i < pathCollection.size() ; i++)
-        {
-            if (pathCollection[i] == path)
-            {
-                count++;
-            }
-        }
-        cout << "Smallest way is: " << path << endl;
-        cout << "Whole small way: " << count << endl;
+        return tempPath + 1;
     }
-    else
-    {
-        cout << "Sorry!" << endl << "There is no way to reach that position" << endl;
-    }
+    cout << "enter 6" << endl;
+    cout << startRow << "    " << startColumn << endl;
+    return -1;
 }
+
 int main() {
     int row , column;
     setSize(row , column);
@@ -242,6 +179,15 @@ int main() {
     setMatrixField(matrixField , row , column , plus , minus);
     int startRow = 0 , startColumn = 0 , endRow = 0 , endColumn = 0;
     setStartAndEnd(matrixField , startRow , startColumn , endRow , endColumn , plus );
-    getSmallestPathToDestination(matrixField , startRow , startColumn , endRow , endColumn , row , column);
+    int path = 0;
+    int finalPath = findShortestWay(matrixField , startRow  , startColumn , endRow , endColumn);
+    if (finalPath == -1)
+    {
+        cout << "there is no way!!" << endl;
+    }
+    else
+    {
+        cout << "Shortest Path is : " << finalPath;
+    }
     return 0;
 }
