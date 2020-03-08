@@ -8,7 +8,6 @@ class cell
 public:
 
     int value;
-    int id;
     bool freeToPass = true;
 };
 
@@ -32,13 +31,10 @@ void printMatrix(vector< vector<cell> > matrix , int column , int row)
 }
 void setMatrixField(vector< vector<cell> > &matrix , int row , int column , int & plus , int & minus)
 {
-    int id = 1;
     for (int i = 0 ; i < row ; i++)
     {
         for (int j = 0 ; j < column ; j++)
         {
-            matrix[i][j].id = id;
-            id++;
             cout << "This is Column: " << j << " and Row: " << i  << " and Enter \"" << 0 << "\" if You Want to Block This Place or Input Some Other Number for Keeping Open: ";
             int input;
             cin >> input;
@@ -104,73 +100,43 @@ void setStartAndEnd(vector< vector<cell> > matrix , int & startRow , int & start
 }
 int findShortestWay (vector< vector<cell> > map , int startRow , int startColumn , int endRow , int endColumn)
 {
-    cout << "enter 1" << endl;
-    cout << startRow << "    " << startColumn << endl;
     if (startRow == endRow && startColumn == endColumn)
     {
         return 0;
     }
+    if (startRow < 0
+            || startRow > map.size() - 1
+            || startColumn < 0
+            || startColumn > map[0].size() - 1
+            || !map[startRow][startColumn].freeToPass
+            || map[startRow][startColumn].value == 0)
+    {
+        return -1;
+    }
+
     map[startRow][startColumn].freeToPass = false;
     vector <int> pathCollection;
-    cout << "enter 2" << endl;
-    cout << startRow << "    " << startColumn << endl;
-    if (startRow + 1 <= map.size() - 1)
+    pathCollection.push_back(findShortestWay(map , startRow + 1 , startColumn , endRow , endColumn));
+    pathCollection.push_back(findShortestWay(map , startRow , startColumn + 1 , endRow , endColumn));
+    pathCollection.push_back(findShortestWay(map, startRow - 1 , startColumn , endRow , endColumn));
+    pathCollection.push_back(findShortestWay(map , startRow , startColumn - 1 , endRow , endColumn));
+    int tempPath = map.size() * map[0].size() + 1;
+    for (int path : pathCollection)
     {
-        if (map[startRow + 1][startColumn].freeToPass && map[startRow + 1][startColumn].value != 0)
+        if(path != -1 && tempPath > path)
         {
-            pathCollection.push_back(
-                    findShortestWay(map , startRow + 1 , startColumn , endRow , endColumn));
+            tempPath = path;
         }
     }
-    cout << "enter 3" << endl;
-    cout << startRow << "    " << startColumn << endl;
-    if (startColumn + 1 <= map[0].size() - 1)
+    if (tempPath == map.size() * map[0].size() + 1)
     {
-        if (map[startRow][startColumn + 1].freeToPass && map[startRow][startColumn + 1].value != 0)
-        {
-            pathCollection.push_back(
-                    findShortestWay(map , startRow , startColumn + 1 , endRow , endColumn));
-        }
+        return -1;
     }
-    cout << "enter 3" << endl;
-    cout << startRow << "    " << startColumn << endl;
-    if (startRow - 1 >= 0)
+    else
     {
-        if (map[startRow - 1][startColumn].freeToPass && map[startRow - 1][startColumn].value != 0)
-        {
-            pathCollection.push_back(
-                    findShortestWay(map, startRow - 1 , startColumn , endRow , endColumn));
-        }
-    }
-    cout << "enter 4" << endl;
-    cout << startRow << "    " << startColumn << endl;
-    if (startColumn - 1 >= 0)
-    {
-        if (map[startRow][startColumn - 1].freeToPass && map[startRow][startColumn - 1].value != 0)
-        {
-            pathCollection.push_back(
-                    findShortestWay(map , startRow , startColumn - 1 , endRow , endColumn));
-        }
-    }
-    cout << "enter 5" << endl;
-    cout << startRow << "    " << startColumn << endl;
-    if(pathCollection.size())
-    {
-        int tempPath = map.size() * map[0].size() + 1;
-        for (int path : pathCollection)
-        {
-            if(path != -1 && tempPath > path)
-            {
-                tempPath = path;
-            }
-        }
         return tempPath + 1;
     }
-    cout << "enter 6" << endl;
-    cout << startRow << "    " << startColumn << endl;
-    return -1;
 }
-
 int main() {
     int row , column;
     setSize(row , column);
@@ -179,7 +145,6 @@ int main() {
     setMatrixField(matrixField , row , column , plus , minus);
     int startRow = 0 , startColumn = 0 , endRow = 0 , endColumn = 0;
     setStartAndEnd(matrixField , startRow , startColumn , endRow , endColumn , plus );
-    int path = 0;
     int finalPath = findShortestWay(matrixField , startRow  , startColumn , endRow , endColumn);
     if (finalPath == -1)
     {
